@@ -1,8 +1,18 @@
-<div class="page-header">
+<!-- <div class="page-header">
   <h1>
     Photos
     <a href="/photos/new" class="btn btn-lg btn-success">New Photo</a>
   </h1>
+</div>
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+<a href="/photos/new" class="btn btn-default btn-block">
+  <i class="fa fa-plus"></i>
+</a>
+
+<hr>
+</div>
 </div>
 
 <div class="row">
@@ -29,4 +39,96 @@
       <% end %>
     </table>
   </div>
+</div> -->
+
+<div class="container">
+
+
+  <!-- <div class="row">
+<div class="col-md-8 col-md-offset-2">
+  <a href="/photos/new" class="btn btn-default btn-block">
+    <i class="fa fa-plus"></i>
+  </a>
+
+  <hr>
+</div>
+</div> -->
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+<% @photos.each do |photo| %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <a href="/users/<%= photo.user_id%>"><%=photo.caption%></a>
+        <small>
+          about 1 hour ago
+        </small>
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      <a href="/photos/70">
+        <img src="etest" class="img-responsive">
+      </a>
+
+      <p>
+          <form action="/create_like" method="post">
+            <!-- Hidden input for authenticity token to protect from forgery -->
+            <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
+
+            <input type="hidden" name="photo_id" value="70">
+
+            <input type="hidden" name="user_id" value="61">
+
+            <button class="btn btn-link">
+              <i class="fa fa-heart-o"></i>
+            </button>
+
+            <small class="text-muted">be the first to like this</small>
+          </form>
+      </p>
+
+      <ul class="media-list">
+
+        <li class="media">
+          <div class="media-body">
+            <h6 class="media-heading">
+              <a href="/users/1">hola</a>
+              <small>
+                about 1 hour ago
+              </small>
+            </h6>
+            test
+          </div>
+        </li>
+
+
+        <li class="media">
+          <div class="media-body">
+            <form action="/create_comment" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="O4gvyv12VkER7Uwus4jlw+SVCPl9hjSHVJXikXH3v6RswnUM1mHBWdAfQ5pkOx+N0RxJcVY2YkaapdRlJdCCKA==">
+
+              <input type="hidden" name="photo_id" value="70">
+
+              <input type="hidden" name="user_id" value="61">
+
+              <!-- Label and input for body -->
+              <div class="form-group">
+                <label for="body" class="sr-only">
+                  Body
+                </label>
+
+                <input type="text" id="body" name="body" placeholder="Add a comment..." class="form-control" required>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 </div>
