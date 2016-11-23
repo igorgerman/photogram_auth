@@ -62,7 +62,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
-        <a href="/users/<%= photo.user_id%>"><%=photo.caption%></a>
+        <a href="/users/<%= photo.user_id%>"><%=photo.user.username%></a>
         <small>
           about 1 hour ago
         </small>
@@ -74,6 +74,64 @@
         <img src="<%=photo.image%>" class="img-responsive">
       </a>
     </div>
+    <p>
+        <form action="/create_like" method="post">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
+
+          <input type="hidden" name="photo_id" value="<%= photo.id %>">
+
+          <input type="hidden" name="user_id" value="<%=current_user.id%>">
+
+          <button class="btn btn-link">
+            <i class="fa fa-heart-o"></i>
+          </button>
+
+          <small class="text-muted">be the first to like this</small>
+        </form>
+    </p>
+
+
+    <ul class="media-list">
+<% photo.comments.each do |comment|%>
+  <li class="media">
+    <div class="media-body">
+      <h6 class="media-heading">
+        <a href="/users/<%= comment.user.id %>"><%= comment.user.username %></a>
+        <small>
+          10 minutes ago
+        </small>
+      </h6>
+      <%= comment.body %>
+    </div>
+  </li>
+  <%end%>
+
+
+
+  <li class="media">
+    <div class="media-body">
+      <form action="/create_comment" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="WkSprlZNj4Frs5qAQu8wcNQQ8PX6NXfUHUq5cHvNrEkNDvNofVoYmapBlTSVXMo+4ZmxfdGFIRXTeo+EL+qRxQ==">
+
+        <input type="hidden" name="photo_id" value="<%= photo.id %>">
+
+        <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+        <!-- Label and input for body -->
+        <div class="form-group">
+          <label for="body" class="sr-only">
+            Body
+          </label>
+
+          <input type="text" id="body" name="body" placeholder="Add a comment..." class="form-control" required>
+        </div>
+      </form>
+    </div>
+  </li>
+</ul>
+
   </div>
 </div>
 </div>
