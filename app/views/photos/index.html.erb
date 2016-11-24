@@ -23,7 +23,7 @@
       <h3 class="panel-title">
         <a href="/users/<%= photo.user_id%>"><%=photo.user.username%></a>
         <small>
-          about 1 hour ago
+          <%= time_ago_in_words(photo.created_at) %>
         </small>
       </h3>
     </div>
@@ -80,7 +80,7 @@
           <h6 class="media-heading">
             <a href="/users/<%= photo.user.id %>"><%= photo.user.username %></a>
             <small>
-              10 minutes ago
+              <%= time_ago_in_words(photo.created_at) %>
             </small>
           </h6>
           <%= photo.caption %>
@@ -93,7 +93,7 @@
       <h6 class="media-heading">
         <a href="/users/<%= comment.user.id %>"><%= comment.user.username %></a>
         <small>
-          10 minutes ago
+          <%= time_ago_in_words(comment.created_at) %>
         </small>
       </h6>
       <%= comment.body %>
