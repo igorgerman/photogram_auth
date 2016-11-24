@@ -33,6 +33,9 @@
         <img src="<%=photo.image%>" class="img-responsive">
       </a>
     </div>
+
+<%if photo.likes.count == 0 %>
+
     <p>
         <form action="/create_like" method="post">
           <!-- Hidden input for authenticity token to protect from forgery -->
@@ -50,8 +53,40 @@
         </form>
     </p>
 
+    <%elsif photo.likes.count != 0  %>
+    <p>
+        <form action="/create_like" method="post">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
+
+          <input type="hidden" name="photo_id" value="<%= photo.id %>">
+
+          <input type="hidden" name="user_id" value="<%=current_user.id%>">
+
+          <button class="btn btn-link">
+            <i class="fa fa-heart"></i>
+          </button>
+
+          <small class="text-muted">be the first to like this</small>
+        </form>
+    </p>
+
+<%end%>
 
     <ul class="media-list">
+
+      <li class="media">
+        <div class="media-body">
+          <h6 class="media-heading">
+            <a href="/users/<%= photo.user.id %>"><%= photo.user.username %></a>
+            <small>
+              10 minutes ago
+            </small>
+          </h6>
+          <%= photo.caption %>
+        </div>
+      </li>
+
 <% photo.comments.each do |comment|%>
   <li class="media">
     <div class="media-body">
