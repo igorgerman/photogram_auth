@@ -34,9 +34,32 @@
       </a>
     </div>
 
-<%if photo.likes.count == 0 %>
 
-    <p>
+      <p>
+    <%if photo.fans.exists?(current_user.id) %>
+
+      <form action="/delete_like" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
+
+        <input type="hidden" name="photo_id" value="<%= photo.id %>">
+
+        <input type="hidden" name="user_id" value="<%=current_user.id%>">
+
+        <button class="btn btn-link">
+          <i class="fa fa-heart"></i>
+        </button>
+
+        <% if photo.likes.count == 0 %>
+
+                  <small class="text-muted">be the first to like this</small>
+          <%else%>
+                  <%= photo.fans.pluck(:username).to_sentence %> like this photo
+        <%end%>
+
+      </form>
+
+        <%else%>
         <form action="/create_like" method="post">
           <!-- Hidden input for authenticity token to protect from forgery -->
           <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
@@ -49,29 +72,17 @@
             <i class="fa fa-heart-o"></i>
           </button>
 
-          <small class="text-muted">be the first to like this</small>
+          <% if photo.likes.count == 0 %>
+
+                    <small class="text-muted">be the first to like this</small>
+            <%else%>
+                    <%= photo.fans.pluck(:username).to_sentence %> like this photo
+          <%end%>
+
         </form>
-    </p>
+          <%end%>
 
-    <%elsif photo.likes.count != 0  %>
-    <p>
-        <form action="/create_like" method="post">
-          <!-- Hidden input for authenticity token to protect from forgery -->
-          <input name="authenticity_token" type="hidden" value="bIFqtUD9Jsbq4G8n+CyIxad+w4qgy7GGMvUnrrtsUtY7yzBza+qx3isSYJMvn3KLkveCAot750f8xRFa70tvWg==">
 
-          <input type="hidden" name="photo_id" value="<%= photo.id %>">
-
-          <input type="hidden" name="user_id" value="<%=current_user.id%>">
-
-          <button class="btn btn-link">
-            <i class="fa fa-heart"></i>
-          </button>
-
-           <%= photo.fans.pluck(:username).to_sentence %> like this photo 
-        </form>
-    </p>
-
-<%end%>
 
     <ul class="media-list">
 
